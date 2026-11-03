@@ -35,9 +35,9 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
         placeholder="Ask a question about your document..."
         disabled={disabled}
         rows={1}
-        className="resize-none"
+        className="min-h-9 max-h-40 resize-none py-1.5"
       />
-      <Button onClick={handleSend} disabled={disabled || !value.trim()} size="icon">
+      <Button onClick={handleSend} disabled={disabled || !value.trim()} size="icon" className="size-9 shrink-0">
         <SendHorizontal className="size-4" />
       </Button>
     </div>
