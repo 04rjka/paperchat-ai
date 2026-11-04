@@ -3,18 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers.auth import router as auth_router
 from app.routers.chat import router as chat_router
 from app.routers.documents import router as documents_router
+from app.config import settings
 
 app = FastAPI()
 
-origins = [
-    "http://localhost:5173",  # Vite dev server
-    "http://localhost:3000",  # Next.js / CRA
-    "http://127.0.0.1:5173",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=settings.cors_origins_list,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
