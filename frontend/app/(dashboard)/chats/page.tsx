@@ -1,8 +1,8 @@
 "use client"
 import { useEffect, useState } from "react";
-import { fetchChats, Conversation } from "@/lib/services/chat"
+import { fetchChats, Conversation,deleteChat } from "@/lib/services/chat"
 import Link from "next/link";
-import { Loader2, MessageSquarePlus } from "lucide-react";
+import { Loader2, MessageSquarePlus,Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -27,7 +27,8 @@ export default function Home() {
   )
   if (error) return <p>{error}</p>;
 
-  return (<div className="flex flex-col flex-1 items-center justify-start bg-background font-sans p-3">
+  return (
+  <div className="flex flex-col flex-1 items-center justify-start bg-background font-sans p-3">
     {chats.length === 0 ? (
       <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
         <MessageSquarePlus className="h-10 w-10 text-muted-foreground" />
@@ -39,20 +40,36 @@ export default function Home() {
       </div>
     ) : (
       chats.map((c) => (
-        <Link
+        <div
           key={c.id}
-          href={`/chats/${c.id}`}
-          className="mb-2 flex w-full max-w-xl flex-col gap-1 rounded-lg border border-border p-3 hover:bg-muted sm:flex-row sm:items-center sm:justify-between sm:gap-5"
+          className="mb-2 flex w-full max-w-xl items-center gap-2 rounded-lg border border-border hover:bg-muted"
         >
-          <h3 className="min-w-0 truncate font-medium text-foreground capitalize-first">
-            {c.title}
-          </h3>
-          <p className="text-xs text-muted-foreground sm:whitespace-nowrap sm:text-sm">
-            {new Date(c.created_at).toLocaleString()}
-          </p>
-        </Link>
+          <Link
+            href={`/chats/${c.id}`}
+            className="flex min-w-0 flex-1 flex-col gap-1 p-3 sm:flex-row sm:items-center sm:justify-between sm:gap-5"
+          >
+            <h3 className="min-w-0 truncate font-medium text-foreground capitalize-first">
+              {c.title}
+            </h3>
+            <p className="text-xs text-muted-foreground sm:whitespace-nowrap sm:text-sm">
+              {new Date(c.created_at).toLocaleString()}
+            </p>
+          </Link>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="mr-2 shrink-0 text-muted-foreground hover:text-destructive"
+            aria-label="Delete chat"
+            onClick={() => {
+              deleteChat(c.id)
+              setChats((prev) => prev.filter((chat) => chat.id !== c.id));
+            }}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
       ))
     )}
   </div>
-  );
+);
 }

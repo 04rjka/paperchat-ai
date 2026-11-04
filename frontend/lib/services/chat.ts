@@ -34,6 +34,10 @@ export async function fetchMessages(conversationId: number): Promise<AxiosRespon
   return api.get<Message[]>(`/chat/conversations/${conversationId}/messages`);
 }
 
+export async function deleteChat(conversationId: number): Promise<AxiosResponse<Message[]>> {
+  return api.delete<Message[]>(`/chat/conversations/${conversationId}/delete`);
+}
+
 export async function askQuestion(
   question: string,
   conversationId: number | undefined,
