@@ -1,8 +1,8 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-STORAGE_DIR = PROJECT_ROOT / "backend" / "storage"
+BACKEND_ROOT = Path(__file__).resolve().parents[1]
+STORAGE_DIR = BACKEND_ROOT / "storage"
 
 # Create storage directories
 (STORAGE_DIR / "chroma").mkdir(parents=True, exist_ok=True)
@@ -34,7 +34,7 @@ class Settings(BaseSettings):
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
 
     model_config = SettingsConfigDict(
-        env_file= PROJECT_ROOT / ".env",
+        env_file= BACKEND_ROOT / ".env",
         extra="ignore",
     )
 
