@@ -2,6 +2,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+STORAGE_DIR = PROJECT_ROOT / "backend" / "storage"
+
+# Create storage directories
+(STORAGE_DIR / "chroma").mkdir(parents=True, exist_ok=True)
+(STORAGE_DIR / "uploads").mkdir(parents=True, exist_ok=True)
 
 class Settings(BaseSettings):
     #API Keys
@@ -12,9 +17,9 @@ class Settings(BaseSettings):
     llm_model: str = "gemini-2.5-flash"
 
     # Storage
-    chroma_path: str = str(PROJECT_ROOT / "backend/storage/chroma")
-    upload_path: str = str(PROJECT_ROOT / "backend/storage/uploads")
-    database_url: str = f"sqlite:///{PROJECT_ROOT / 'backend/storage/app.db'}"
+    chroma_path: str = str(STORAGE_DIR / "chroma")
+    upload_path: str = str(STORAGE_DIR / "uploads")
+    database_url: str = f"sqlite:///{STORAGE_DIR / 'app.db'}"
 
     #Auth
     secret_key: str
