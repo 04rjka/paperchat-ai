@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     google_api_key:str
 
     # Models
-    embedding_model: str = "all-MiniLM-L6-v2"
+    embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     llm_model: str = "gemini-2.5-flash"
 
     # Storage

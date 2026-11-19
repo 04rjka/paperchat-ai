@@ -1,8 +1,9 @@
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.embeddings import FastEmbedEmbeddings
+from app.config import settings
 
 class EmbeddingService:
     def __init__(self):
-        self.model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+        self.model = FastEmbedEmbeddings(model_name=settings.embedding_model)
     
     def get(self):
         return self.model
